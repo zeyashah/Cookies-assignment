@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Cookie Confectionary</title>
+		<style>
+	      body {
+	        background-color: black;
+	      }
+
+	      html, h1, h3, span.count {
+	        color: white;
+	        text-align: center;
+	      }
+
+	      p, span.clear {
+	        color: grey;
+	        text-align: center;
+	      }
+
+	      h1 {
+	      	color: black;
+	      	text-shadow: 0 4px 4px rgba(0, 0, 0, 0.5);
+	      	/*text-shadow: 0 2px 2px rgba(0, 0, 0, 0.5);*/       
+	      	background-color: grey;
+	      	margin-top: 30px;
+	      	margin-bottom: 40px;
+	      	padding-top: 7px;
+	      	padding-bottom: 7px;
+	      }
+
+	      h3 {
+	      	margin-bottom: 8px;
+	      }
+	      
+	      div {
+	      	float: left;
+	      	width: 400px;
+			height: 280px;
+			margin: 30px 15px 50px 23px; 
+			border: 3px solid grey;
+    		}
+
+	      .button {
+	      	font-size: 12px;
+	      	background-color: grey;
+	      	padding-left: 2px;
+	      	padding-right: 2px;
+	      	margin-top: 10px;
+	      }
+
+	    </style>
+	</head>
+
+	<body>
+		<h1>COOKIE CONFECTIONARY</h1>
+
+		<p>Click the photo (sugar, lemon, chocolate), to grab a cookie. You can take any or all flavors and as many times as you like.</p>
+		<p>Refresh the page to keep track of your cookie intake</p>
+		<p>Come back to the page to continue your cookie rampage, starting from where you left off. Or clear your cookie count to start off guilt free next time you come back for more cookies!!</p>
+
+		<div data-flavor="sugar">
+			<img class="cookie" src="sugar-cookies.jpg">
+	    	<h3>SUGAR COOKIES:</h3>
+	    	<span class="count"></span><br>
+	    	<span class="clear"><button id="myBtn" class="button">CLEAR</button></span>
+	    </div>
+
+	    <div data-flavor="chocolate">
+		    <img class="cookie" src="chocolate-cookies.jpg">
+		    <h3>CHOCOLATE COOKIES:</h3>
+		    <span class="count"></span><br>
+		    <span class="clear"><button id="myBtn" class="button">CLEAR</button></span>
+	    </div>
+
+	    <div data-flavor="lemon">
+	    	<img class="cookie" src="lemon-cookies.jpg">
+		    <h3>LEMON COOKIES:</h3>
+		    <span class="count"></span><br>
+		    <span class="clear"><button id="myBtn" class="button">CLEAR</button></span>
+	    </div>
+
+
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+	    <script src="cookies.js"></script>
+
+	    <script>
+	      $(document).ready(function() {
+
+	      	//to set up a counter for the clicks on each cookie photo and display the number on screen
+			$(".count").each(function() {
+	          var flavor = $(this).parent().attr("data-flavor");
+
+	          var previousCount = Cookies.get(flavor);
+
+	          $(this).html(previousCount);
+	        });
+
+
+			// to attach a click handler to the cookie photo and set the cookie to register the clicks in the variable 'flavor' as the key and set the value 'current count' as a number to display the number of clicks
+	        $(".cookie").click(function() {
+	          var flavor = $(this).parent().attr("data-flavor");
+
+	          var previousCount = Cookies.get(flavor);
+	          var currentCount = 0;
+
+	          if (previousCount) {
+	            currentCount = parseInt(previousCount) + 1;
+	          } else {
+	            currentCount = 1;
+	          }
+
+	          Cookies.set(flavor, currentCount);
+	        });
+
+	        // clear the value stored in the cookies by setting value of 0 for the key 'flavor' when the clear button is clicked
+	        $(".clear").click(function() {
+	          var flavor = $(this).parent().attr("data-flavor");
+
+	          Cookies.set(flavor, 0);
+	        });
+	      });
+	    </script>
+
+	</body>
+</html>
